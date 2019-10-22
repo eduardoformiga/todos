@@ -2,17 +2,18 @@
   <div class="input-text">
     <div v-if="editable" class="input-editable">
       <input
+        v-model="taskText"
         type="text"
         :placeholder="text"
         class="input"
-        @keypress.enter="editable = !editable"
+        @keypress.enter="handleTask"
       />
       <span>Enter ↵</span>
     </div>
     <div v-else class="input-pending">
-      <p>Teste de valor preenchido para a task</p>
+      <p>{{ taskText }}</p>
       <div class="actions">
-        <button @click="editable = !editable">edit</button>
+        <button @click="editable = true">edit</button>
         <button @click="editable = !editable">delete</button>
       </div>
     </div>
@@ -29,7 +30,22 @@ export default {
     },
     editable: {
       type: Boolean,
-      default: false
+      default: true
+    }
+  },
+  date() {
+    return {
+      taskText: ''
+    }
+  },
+  methods: {
+    handleTask() {
+      if (this.isValidTask()) {
+        this.editable = false
+      }
+    },
+    isValidTask() {
+      return this.taskText.trim() !== ''
     }
   }
 }
