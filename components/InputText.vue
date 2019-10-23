@@ -1,6 +1,6 @@
 <template>
   <div class="input-text">
-    <div v-if="editable" class="input-editable">
+    <div v-if="canEdit" class="input-editable">
       <input
         v-model="taskText"
         type="text"
@@ -13,16 +13,28 @@
     <div v-else class="input-pending">
       <p>{{ taskText }}</p>
       <div class="actions">
-        <img src="../assets/images/edit.png" @click="editable = true" />
-        <img src="../assets/images/delete.png" />
+        <image-button
+          img-name="edit.svg"
+          alt="edit"
+          @click="canEdit = true"
+        ></image-button>
+        <image-button
+          img-name="delete.svg"
+          alt="delete"
+          @click="canEdit = true"
+        ></image-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import ImageButton from './ImageButton'
 export default {
   name: 'InputText',
+  components: {
+    ImageButton
+  },
   props: {
     text: {
       type: String,
@@ -35,13 +47,14 @@ export default {
   },
   data() {
     return {
-      taskText: ''
+      taskText: '',
+      canEdit: this.editable
     }
   },
   methods: {
     handleTask() {
       if (this.isValidTask()) {
-        this.editable = false
+        this.canEdit = false
       }
     },
     isValidTask() {
@@ -63,6 +76,13 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 44px;
+    }
   }
 
   .input-editable {
@@ -80,13 +100,6 @@ export default {
     }
   }
 
-  .input-pending {
-    img {
-      cursor: pointer;
-      background-color: transparent;
-    }
-  }
-
   .input {
     display: inline-block;
     margin: 0;
@@ -100,6 +113,10 @@ export default {
     font-size: 16px;
     border-bottom: 1px solid $grey-light-2;
     box-sizing: content-box;
+
+    &:not(:placeholder-shown) {
+      border-bottom: 1px solid $active;
+    }
 
     &:focus {
       outline: 0;
