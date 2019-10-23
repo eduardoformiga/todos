@@ -68,4 +68,13 @@ footer {
     }
   }
 }
+
+@media screen and (max-width: 450px) {
+  header {
+    height: 150px;
+  }
+  footer {
+    transform: translateY($translate-size-mobile);
+  }
+}
 </style>

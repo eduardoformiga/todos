@@ -13,8 +13,8 @@
     <div v-else class="input-pending">
       <p>{{ taskText }}</p>
       <div class="actions">
-        <button @click="editable = true">edit</button>
-        <button @click="editable = !editable">delete</button>
+        <img src="../assets/images/edit.png" @click="editable = true" />
+        <img src="../assets/images/delete.png" />
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@ export default {
       default: true
     }
   },
-  date() {
+  data() {
     return {
       taskText: ''
     }
@@ -77,6 +77,13 @@ export default {
       border-radius: 4px;
       background-color: $grey-light-2;
       color: $inactive;
+    }
+  }
+
+  .input-pending {
+    img {
+      cursor: pointer;
+      background-color: transparent;
     }
   }
 
