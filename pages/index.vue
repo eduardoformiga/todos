@@ -20,13 +20,13 @@
       <div class="todo-list__title">
         Que tal organizar as ideias criando uma lista agora?
       </div>
-      <task @editTask="handleAddTask" @deleteTask="handleDeleteTask"></task>
+      <task :model="true" @editTask="handleAddTask"></task>
     </section>
     <section v-if="hasTask" class="todo-has-task">
       <div class="todo-list__title">Pendente ({{ pendingTasks.length }})</div>
       <task
-        v-for="(item, index) in pendingTasks"
-        :key="index"
+        v-for="item in pendingTasks"
+        :key="item"
         :title="item"
         :editable="false"
         @editTask="handleEditTask(item, index)"
@@ -41,8 +41,8 @@
       <div v-if="hasDoneTask">
         <div class="todo-list__title">Feito</div>
         <task
-          v-for="(item, index) in doneTasks"
-          :key="index"
+          v-for="item in doneTasks"
+          :key="item"
           :title="item"
           :editable="false"
         ></task>
