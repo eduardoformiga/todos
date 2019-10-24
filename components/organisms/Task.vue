@@ -92,7 +92,7 @@ export default {
 
 <style lang="scss" scoped>
 .task {
-  padding: 8px 24px;
+  padding: 8px 28px;
   display: flex;
   align-items: center;
 

@@ -22,8 +22,8 @@
       </div>
       <task @editTask="handleAddTask" @deleteTask="handleDeleteTask"></task>
     </section>
-    <section v-if="hasTask">
-      <div class="todo-list__title">Pendente</div>
+    <section v-if="hasTask" class="todo-has-task">
+      <div class="todo-list__title">Pendente ({{ pendingTasks.length }})</div>
       <task
         v-for="(item, index) in pendingTasks"
         :key="index"
@@ -136,6 +136,13 @@ export default {
   .todo-first-task {
     .todo-list__title {
       padding: 40px 24px 12px 24px;
+      font-size: 16px;
+      color: $primary;
+    }
+  }
+  .todo-has-task {
+    .todo-list__title {
+      padding: 31px 28px 14px;
       font-size: 16px;
       color: $primary;
     }
