@@ -44,6 +44,9 @@ export default {
     // Usado pelo pai para focar o input
     focus() {
       this.$refs.inputText.focus()
+    },
+    reset() {
+      this.$refs.inputText.reset()
     }
   }
 }

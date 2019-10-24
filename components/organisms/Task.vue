@@ -6,7 +6,7 @@
         v-if="editMode"
         ref="taskInput"
         :text="text"
-        placeholder="Um passo de cada vez"
+        :placeholder="placeholder"
         @enter="handleTask"
       ></input-tag>
       <item
@@ -32,22 +32,41 @@ export default {
     Item
   },
   props: {
+    model: {
+      type: Boolean,
+      default: false
+    },
     editable: {
       type: Boolean,
       default: true
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    placeholder: {
+      type: String,
+      default: 'Um passo de cada vez'
     }
   },
   data() {
     return {
-      text: '',
+      text: this.title,
       editMode: this.editable
     }
   },
   methods: {
     handleTask(taskText) {
       if (!this.isBlank(taskText)) {
-        this.editMode = false
-        this.text = taskText
+        if (this.model) {
+          this.editMode = true
+          this.title = ''
+          this.resetInput()
+        } else {
+          this.editMode = false
+          this.text = taskText
+        }
+        this.$emit('editTask', taskText)
       }
     },
     isBlank(str) {
@@ -61,8 +80,11 @@ export default {
     focusInput() {
       this.$refs.taskInput.focus()
     },
+    resetInput() {
+      this.$refs.taskInput.reset()
+    },
     deleteTask() {
-      alert('delete')
+      this.$emit('deleteTask')
     }
   }
 }

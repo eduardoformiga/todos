@@ -34,6 +34,9 @@ export default {
     // used by parent component
     focus() {
       this.$refs.input.focus()
+    },
+    reset() {
+      this.inputedText = ''
     }
   }
 }

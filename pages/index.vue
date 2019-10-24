@@ -6,21 +6,47 @@
       src="../assets/images/background-illustration.svg"
       alt="background-ilustration"
     />
-    <div class="title">Nenhuma tarefa criada ainda.</div>
-    <div class="state-image">
-      <picture>
-        <source
-          srcset="../assets/images/meditating-sm.svg"
-          media="(max-width: 450px)"
-        />
-        <img src="../assets/images/meditating.svg" alt="meditating" />
-      </picture>
-    </div>
-    <section class="todo-list">
+    <section v-if="!hasTask" class="todo-first-task">
+      <div class="title">Nenhuma tarefa criada ainda.</div>
+      <div class="state-image">
+        <picture>
+          <source
+            srcset="../assets/images/meditating-sm.svg"
+            media="(max-width: 450px)"
+          />
+          <img src="../assets/images/meditating.svg" alt="meditating" />
+        </picture>
+      </div>
       <div class="todo-list__title">
         Que tal organizar as ideias criando uma lista agora?
       </div>
-      <task></task>
+      <task @editTask="handleAddTask" @deleteTask="handleDeleteTask"></task>
+    </section>
+    <section v-if="hasTask">
+      <div class="todo-list__title">Pendente</div>
+      <task
+        v-for="(item, index) in pendingTasks"
+        :key="index"
+        :title="item"
+        :editable="false"
+        @editTask="handleEditTask(item, index)"
+        @deleteTask="handleDeleteTask(item)"
+      ></task>
+      <task
+        placeholder="Cuidado com o Burnout, viu?"
+        :model="true"
+        @editTask="handleAddTask"
+        @deleteTask="handleDeleteTask"
+      ></task>
+      <div v-if="hasDoneTask">
+        <div class="todo-list__title">Feito</div>
+        <task
+          v-for="(item, index) in doneTasks"
+          :key="index"
+          :title="item"
+          :editable="false"
+        ></task>
+      </div>
     </section>
     <img
       v-if="$mq == 'lg'"
@@ -32,10 +58,39 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import Task from '../components/organisms/Task'
 
 export default {
-  components: { Task }
+  components: { Task },
+  computed: {
+    ...mapGetters({
+      pendingTasks: 'tasks/pending',
+      doneTasks: 'tasks/done'
+    }),
+    hasTask() {
+      return this.doneTasks.length > 0 || this.pendingTasks.length > 0
+    },
+    hasDoneTask() {
+      return this.doneTasks.length > 0
+    }
+  },
+  methods: {
+    ...mapActions({
+      addTask: 'tasks/addTask',
+      editTask: 'tasks/editTask',
+      deleteTask: 'tasks/deleteTask'
+    }),
+    handleAddTask(taskText) {
+      this.addTask(taskText)
+    },
+    handleEditTask(item, index) {
+      this.editTask({ item, index })
+    },
+    handleDeleteTask(index) {
+      this.deleteTask(index)
+    }
+  }
 }
 </script>
 
@@ -44,7 +99,7 @@ export default {
   position: relative;
   max-width: 800px;
   min-width: 320px;
-  height: 422px;
+  min-height: 422px;
   margin: auto;
   border-radius: 12px;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.15);
@@ -78,10 +133,9 @@ export default {
       height: auto;
     }
   }
-  .todo-list {
-    padding-top: 40px;
+  .todo-first-task {
     .todo-list__title {
-      padding: 0 24px 12px 24px;
+      padding: 40px 24px 12px 24px;
       font-size: 16px;
       color: $primary;
     }
@@ -96,7 +150,7 @@ export default {
 
 @media screen and (max-width: 450px) {
   .container {
-    height: 382px;
+    min-height: 382px;
     transform: translateY($translate-size-mobile);
   }
 }
