@@ -23,28 +23,28 @@
       <task :model="true" @editTask="handleAddTask"></task>
     </section>
     <section v-if="hasTask" class="todo-has-task">
-      <div class="todo-list__title">Pendente ({{ pendingTasks.length }})</div>
+      <div class="todo-list__title">Pendente {{ pendingTasksCount }}</div>
       <task
-        v-for="item in pendingTasks"
-        :key="item"
-        :title="item"
+        v-for="(item, index) in pendingTasks"
+        :key="item.id"
+        :title="item.text"
         :editable="false"
-        @editTask="handleEditTask(item, index)"
+        @editTask="handleEditTask(...arguments, index)"
         @deleteTask="handleDeleteTask(item)"
       ></task>
       <task
         placeholder="Cuidado com o Burnout, viu?"
         :model="true"
         @editTask="handleAddTask"
-        @deleteTask="handleDeleteTask"
       ></task>
       <div v-if="hasDoneTask">
-        <div class="todo-list__title">Feito</div>
+        <div class="todo-list__title">Feito ({{ doneTasks.length }})</div>
         <task
           v-for="item in doneTasks"
-          :key="item"
-          :title="item"
+          :key="item.id"
+          :title="item.text"
           :editable="false"
+          :actions="false"
         ></task>
       </div>
     </section>
@@ -73,6 +73,9 @@ export default {
     },
     hasDoneTask() {
       return this.doneTasks.length > 0
+    },
+    pendingTasksCount() {
+      return this.pendingTasks.length > 0 ? `(${this.pendingTasks.length})` : ''
     }
   },
   methods: {
@@ -81,14 +84,18 @@ export default {
       editTask: 'tasks/editTask',
       deleteTask: 'tasks/deleteTask'
     }),
-    handleAddTask(taskText) {
-      this.addTask(taskText)
+    handleAddTask(text) {
+      const task = {
+        id: new Date().getTime(),
+        text
+      }
+      this.addTask(task)
     },
-    handleEditTask(item, index) {
-      this.editTask({ item, index })
+    handleEditTask(text, index) {
+      this.editTask({ text, index })
     },
-    handleDeleteTask(index) {
-      this.deleteTask(index)
+    handleDeleteTask(item) {
+      this.deleteTask(item)
     }
   }
 }

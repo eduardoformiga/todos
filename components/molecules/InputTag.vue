@@ -7,6 +7,7 @@
       :text="text"
       class="input"
       @enter="handleKeyEnter"
+      @esc="handleKeyEsc"
     />
     <tag>Enter ↵</tag>
   </div>
@@ -40,6 +41,9 @@ export default {
   methods: {
     handleKeyEnter(inputedText) {
       this.$emit('enter', inputedText)
+    },
+    handleKeyEsc() {
+      this.$emit('esc', this.text)
     },
     // Usado pelo pai para focar o input
     focus() {

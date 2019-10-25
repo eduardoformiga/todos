@@ -6,6 +6,7 @@
     :placeholder="placeholder"
     class="input-text"
     @keypress.enter="handleKeyEnter"
+    @keyup.esc="handleKeyEsc"
   />
 </template>
 
@@ -30,6 +31,13 @@ export default {
   methods: {
     handleKeyEnter() {
       this.$emit('enter', this.inputedText)
+    },
+    handleKeyEsc() {
+      // only emit when in edit mode
+      if (this.text !== '') {
+        this.inputedText = this.text
+        this.$emit('esc', this.text)
+      }
     },
     // used by parent component
     focus() {

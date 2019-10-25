@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <p>{{ text }}</p>
-    <div class="actions">
+    <div v-if="actions" class="actions">
       <image-button
         img-name="edit.svg"
         alt="edit"
@@ -27,6 +27,10 @@ export default {
     text: {
       type: String,
       default: ''
+    },
+    actions: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {

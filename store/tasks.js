@@ -2,7 +2,8 @@ import { getTasks } from '../services/task.service'
 
 const state = () => ({
   pending: [],
-  done: []
+  done: [],
+  globalEditMode: false
 })
 
 const getters = {
@@ -11,6 +12,9 @@ const getters = {
   },
   done(state) {
     return state.done
+  },
+  globalEditMode(state) {
+    return state.globalEditMode
   }
 }
 
@@ -18,11 +22,16 @@ const mutations = {
   addTask(state, payload) {
     state.pending.push(payload)
   },
-  editTask(state, { item, index }) {
-    state.pending.splice(index, 1, item)
+  editTask(state, { text, index }) {
+    const task = state.pending[index]
+    task.text = text
+    state.pending.splice(index, 1, task)
   },
-  deleteTask(state, item) {
-    state.pending.splice(state.pending.indexOf(item), 1)
+  toggleGlobalEditMode(state) {
+    state.globalEditMode = !state.globalEditMode
+  },
+  deleteTask(state, payload) {
+    state.pending.splice(state.pending.indexOf(payload), 1)
   },
   setTasks(state, payload) {
     state.pending = payload.pending
@@ -31,11 +40,14 @@ const mutations = {
 }
 
 const actions = {
-  addTask({ commit }, task) {
-    commit('addTask', task)
+  addTask({ commit }, item) {
+    commit('addTask', item)
   },
-  editTask({ commit }, { item, index }) {
-    commit('editTask', { item, index })
+  editTask({ commit }, { text, index }) {
+    commit('editTask', { text, index })
+  },
+  toggleGlobalEditMode({ commit }) {
+    commit('toggleGlobalEditMode')
   },
   deleteTask({ commit }, item) {
     commit('deleteTask', item)

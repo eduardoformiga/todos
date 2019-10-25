@@ -8,10 +8,12 @@
         :text="text"
         :placeholder="placeholder"
         @enter="handleTask"
+        @esc="cancelEditTask"
       ></input-tag>
       <item
         v-else
         :text="text"
+        :actions="actions"
         @editItem="editTask"
         @deleteItem="deleteTask"
       ></item>
@@ -20,6 +22,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import Checkbox from '../atoms/Checkbox'
 import InputTag from '../molecules/InputTag'
 import Item from '../molecules/Item'
@@ -47,6 +50,10 @@ export default {
     placeholder: {
       type: String,
       default: 'Um passo de cada vez'
+    },
+    actions: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -55,27 +62,49 @@ export default {
       editMode: this.editable
     }
   },
+  computed: {
+    ...mapGetters({
+      globalEditMode: 'tasks/globalEditMode'
+    })
+  },
   methods: {
+    ...mapActions({
+      toggleGlobalEditMode: 'tasks/toggleGlobalEditMode'
+    }),
     handleTask(taskText) {
-      if (!this.isBlank(taskText)) {
-        if (this.model) {
-          this.editMode = true
-          this.title = ''
-          this.resetInput()
-        } else {
-          this.editMode = false
-          this.text = taskText
-        }
-        this.$emit('editTask', taskText)
+      // validation
+      if (this.isBlank(taskText)) return
+
+      // new task
+      if (this.model) {
+        this.editMode = true
+        this.title = ''
+        this.resetInput()
+      } else {
+        // edit task
+        this.editMode = false
+        this.toggleGlobalEditMode()
+        this.text = taskText
       }
+
+      this.$emit('editTask', taskText)
     },
     isBlank(str) {
       return !str || /^\s*$/.test(str)
     },
     async editTask() {
+      // validaiton: check if is editing another task
+      if (this.globalEditMode) return
+
       this.editMode = true
+      // TODO set editMode global to true
       await this.$nextTick()
       this.focusInput()
+      this.toggleGlobalEditMode()
+    },
+    cancelEditTask() {
+      this.editMode = false
+      this.toggleGlobalEditMode()
     },
     focusInput() {
       this.$refs.taskInput.focus()
