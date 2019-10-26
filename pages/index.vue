@@ -30,7 +30,7 @@
         :title="item.text"
         :editable="false"
         @editTask="handleEditTask(...arguments, index)"
-        @deleteTask="handleDeleteTask(item)"
+        @deleteTask="confirmDelete(item)"
       ></task>
       <task
         placeholder="Cuidado com o Burnout, viu?"
@@ -63,6 +63,12 @@ import Task from '../components/organisms/Task'
 
 export default {
   components: { Task },
+  data() {
+    return {
+      confirmModal: false,
+      selectedTask: {}
+    }
+  },
   computed: {
     ...mapGetters({
       pendingTasks: 'tasks/pending',
@@ -82,7 +88,8 @@ export default {
     ...mapActions({
       addTask: 'tasks/addTask',
       editTask: 'tasks/editTask',
-      deleteTask: 'tasks/deleteTask'
+      setConfirmModal: 'tasks/setConfirmModal',
+      setSelectedTask: 'tasks/setSelectedTask'
     }),
     handleAddTask(text) {
       const task = {
@@ -94,8 +101,9 @@ export default {
     handleEditTask(text, index) {
       this.editTask({ text, index })
     },
-    handleDeleteTask(item) {
-      this.deleteTask(item)
+    confirmDelete(task) {
+      this.setSelectedTask(task)
+      this.setConfirmModal(true)
     }
   }
 }

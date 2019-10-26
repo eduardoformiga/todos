@@ -9,6 +9,14 @@
     <main>
       <nuxt />
     </main>
+    <transition name="appear">
+      <confirm
+        v-if="confirmModal"
+        :task="selectedTask"
+        @confirm="handleDeleteTask"
+        @cancel="cancelDelete"
+      ></confirm>
+    </transition>
     <footer>
       <p class="first-line">
         Um teste projetado pela
@@ -22,6 +30,36 @@
     </footer>
   </div>
 </template>
+
+<script>
+import { mapActions, mapGetters } from 'vuex'
+import Confirm from '../components/organisms/Confirm'
+
+export default {
+  components: {
+    Confirm
+  },
+  computed: {
+    ...mapGetters({
+      selectedTask: 'tasks/selectedTask',
+      confirmModal: 'tasks/confirmModal'
+    })
+  },
+  methods: {
+    ...mapActions({
+      deleteTask: 'tasks/deleteTask',
+      setConfirmModal: 'tasks/setConfirmModal'
+    }),
+    handleDeleteTask() {
+      this.setConfirmModal(false)
+      this.deleteTask(this.selectedTask)
+    },
+    cancelDelete() {
+      this.setConfirmModal(false)
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 header {

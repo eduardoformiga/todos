@@ -3,7 +3,9 @@ import { getTasks } from '../services/task.service'
 const state = () => ({
   pending: [],
   done: [],
-  globalEditMode: false
+  globalEditMode: false,
+  selectedTask: {},
+  confirmModal: false
 })
 
 const getters = {
@@ -15,6 +17,12 @@ const getters = {
   },
   globalEditMode(state) {
     return state.globalEditMode
+  },
+  selectedTask(state) {
+    return state.selectedTask
+  },
+  confirmModal(state) {
+    return state.confirmModal
   }
 }
 
@@ -33,6 +41,12 @@ const mutations = {
   deleteTask(state, payload) {
     state.pending.splice(state.pending.indexOf(payload), 1)
   },
+  setSelectedTask(state, payload) {
+    state.selectedTask = payload
+  },
+  setConfirmModal(state, confirm) {
+    state.confirmModal = confirm
+  },
   setTasks(state, payload) {
     state.pending = payload.pending
     state.done = payload.done
@@ -42,6 +56,12 @@ const mutations = {
 const actions = {
   addTask({ commit }, item) {
     commit('addTask', item)
+  },
+  setSelectedTask({ commit }, task) {
+    commit('setSelectedTask', task)
+  },
+  setConfirmModal({ commit }, confirm) {
+    commit('setConfirmModal', confirm)
   },
   editTask({ commit }, { text, index }) {
     commit('editTask', { text, index })
