@@ -15,7 +15,6 @@
         :text="text"
         :actions="actions"
         :state="state"
-        :transition="transition"
         @editItem="editTask"
         @deleteItem="deleteTask"
       ></item>
@@ -60,10 +59,6 @@ export default {
     state: {
       type: String,
       default: 'pending'
-    },
-    transition: {
-      type: Boolean,
-      default: false
     }
   },
   data() {

@@ -49,7 +49,6 @@
           :editable="false"
           :actions="false"
           state="done"
-          :transition="item.transition"
           @handleCheckbox="handleCheckTask(...arguments, item)"
         ></task>
       </div>
@@ -82,7 +81,6 @@
           :editable="false"
           :actions="false"
           state="done"
-          :transition="item.transition"
           @handleCheckbox="handleCheckTask(...arguments, item)"
         ></task>
       </div>
@@ -138,8 +136,7 @@ export default {
     handleAddTask(text) {
       const task = {
         id: new Date().getTime(),
-        text,
-        transition: false
+        text
       }
       this.addTask(task)
     },

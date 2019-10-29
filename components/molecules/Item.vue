@@ -35,15 +35,11 @@ export default {
     state: {
       type: String,
       default: 'pending'
-    },
-    transition: {
-      type: Boolean,
-      default: false
     }
   },
   computed: {
     stateClass() {
-      return this.state === 'done' && !this.transition ? 'item-label--done' : ''
+      return this.state === 'done' ? 'item-label--done' : ''
     }
   },
   methods: {
