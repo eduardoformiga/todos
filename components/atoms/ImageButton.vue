@@ -31,5 +31,6 @@ export default {
   border-radius: 50%;
   cursor: pointer;
   user-select: none;
+  margin-left: 8px;
 }
 </style>

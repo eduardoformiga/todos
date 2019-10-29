@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <p>{{ text }}</p>
+    <p :class="stateClass">{{ text }}</p>
     <div v-if="actions" class="actions">
       <image-button
         img-name="edit.svg"
@@ -31,6 +31,19 @@ export default {
     actions: {
       type: Boolean,
       default: true
+    },
+    state: {
+      type: String,
+      default: 'pending'
+    },
+    transition: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    stateClass() {
+      return this.state === 'done' && !this.transition ? 'item-label--done' : ''
     }
   },
   methods: {
@@ -51,11 +64,15 @@ export default {
   align-items: center;
   justify-content: space-between;
 
+  .item-label--done {
+    text-decoration: line-through;
+  }
+
   .actions {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 44px;
+    width: 56px;
   }
 }
 </style>

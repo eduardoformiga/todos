@@ -35,6 +35,16 @@ const mutations = {
     task.text = text
     state.pending.splice(index, 1, task)
   },
+  checkTask(state, item) {
+    const index = state.pending.findIndex((task) => task.id === item.id)
+    state.pending.splice(index, 1)
+    state.done.unshift(item)
+  },
+  unCheckTask(state, item) {
+    const index = state.done.findIndex((task) => task.id === item.id)
+    state.done.splice(index, 1)
+    state.pending.push(item)
+  },
   toggleGlobalEditMode(state) {
     state.globalEditMode = !state.globalEditMode
   },
@@ -63,8 +73,14 @@ const actions = {
   setConfirmModal({ commit }, confirm) {
     commit('setConfirmModal', confirm)
   },
-  editTask({ commit }, { text, index }) {
-    commit('editTask', { text, index })
+  editTask({ commit }, payload) {
+    commit('editTask', payload)
+  },
+  checkTask({ commit }, payload) {
+    commit('checkTask', payload)
+  },
+  unCheckTask({ commit }, payload) {
+    commit('unCheckTask', payload)
   },
   toggleGlobalEditMode({ commit }) {
     commit('toggleGlobalEditMode')

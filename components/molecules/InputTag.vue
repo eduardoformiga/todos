@@ -6,10 +6,12 @@
       :placeholder="placeholder"
       :text="text"
       class="input"
+      @blur="showTag = false"
+      @focus="showTag = true"
       @enter="handleKeyEnter"
       @esc="handleKeyEsc"
     />
-    <tag>Enter ↵</tag>
+    <tag v-if="showTag">Enter ↵</tag>
   </div>
 </template>
 
@@ -35,7 +37,7 @@ export default {
   },
   data() {
     return {
-      taskText: this.text
+      showTag: false
     }
   },
   methods: {

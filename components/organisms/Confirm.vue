@@ -1,11 +1,8 @@
 <template id="modal">
   <div class="modal">
     <div class="modal-window">
-      <p>
-        Deseja deletar a task:
-        <br />
-        <strong>{{ task.text }}</strong> ?
-      </p>
+      <div class="header">Remover task?</div>
+      <p>{{ task.text }}</p>
       <div class="actions">
         <button class="cancel" @click="onCancel">Cancelar</button>
         <button class="confirm" @click="onConfirm">Confirmar</button>
@@ -42,27 +39,58 @@ export default {
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.5);
-}
+  .modal-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: 0.5s;
+    width: 100%;
+    min-width: 300px;
+    max-width: 400px;
+    background: $white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%);
+    padding: 1em;
+    color: $black;
+    text-align: center;
 
-.modal-window {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transition: 0.5s;
-  width: 100%;
-  min-width: 400px;
-  max-width: 600px;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  transform: translate(-50%, -50%);
-  padding: 1em;
-  color: black;
-  text-align: center;
-}
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: -0.5px;
+      color: $primary;
+      padding: 10px;
+    }
+    p {
+      padding: 16px;
+    }
 
-.modal-window .actions {
-  display: flex;
-  justify-content: flex-end;
+    .actions {
+      display: flex;
+      justify-content: center;
+      padding-top: 10px;
+
+      button {
+        font-size: inherit;
+        margin: 4px;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 8px;
+        cursor: pointer;
+      }
+
+      .cancel {
+        border: 1px solid $primary;
+        background: $white;
+        color: $primary;
+      }
+
+      .confirm {
+        background: $primary;
+        color: white;
+      }
+    }
+  }
 }
 
 .actions button {
@@ -73,35 +101,31 @@ export default {
   cursor: pointer;
 }
 
-.actions .cancel {
-  border: 1px solid $primary;
-  background: $white;
-  color: $primary;
-}
-
-.actions .confirm {
-  background: $primary;
-  color: white;
-}
-
 .appear-enter {
   opacity: 0;
-}
-
-.appear-enter .modal-window {
-  transform: translate(-75%, -50%);
+  .modal-window {
+    transform: translate(-75%, -50%);
+  }
 }
 
 .appear-enter-active {
   transition: 0.5s;
 }
 
-.appear-leave-active .modal-window {
-  transform: translate(0, -50%);
-}
-
 .appear-leave-active {
   opacity: 0;
   transition: 0.5s;
+  .modal-window {
+    transform: translate(0, -50%);
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .modal {
+    top: -190px;
+    .modal-window {
+      width: 85%;
+    }
+  }
 }
 </style>

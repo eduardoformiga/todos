@@ -22,13 +22,16 @@
       </div>
       <task :model="true" @editTask="handleAddTask"></task>
     </section>
-    <section v-if="hasTask" class="todo-has-task">
-      <div class="todo-list__title">Pendente {{ pendingTasksCount }}</div>
+    <section v-if="hasTask && !hasOnlyDoneTask" class="todo-has-task">
+      <div class="todo-list__label--pending">
+        Pendente {{ pendingTasksCount }}
+      </div>
       <task
         v-for="(item, index) in pendingTasks"
         :key="item.id"
         :title="item.text"
         :editable="false"
+        @handleCheckbox="handleCheckTask(...arguments, item)"
         @editTask="handleEditTask(...arguments, index)"
         @deleteTask="confirmDelete(item)"
       ></task>
@@ -38,13 +41,49 @@
         @editTask="handleAddTask"
       ></task>
       <div v-if="hasDoneTask">
-        <div class="todo-list__title">Feito ({{ doneTasks.length }})</div>
+        <div class="todo-list__label--done">Feito ({{ doneTasks.length }})</div>
         <task
           v-for="item in doneTasks"
           :key="item.id"
           :title="item.text"
           :editable="false"
           :actions="false"
+          state="done"
+          :transition="item.transition"
+          @handleCheckbox="handleCheckTask(...arguments, item)"
+        ></task>
+      </div>
+    </section>
+    <section v-if="hasOnlyDoneTask" class="todo-has-only-done-task">
+      <div class="title">Tudo pronto!</div>
+      <div class="state-image">
+        <picture>
+          <source
+            srcset="../assets/images/coffee-sm.svg"
+            media="(max-width: 450px)"
+          />
+          <img src="../assets/images/coffee.svg" alt="coffee" />
+        </picture>
+      </div>
+      <div class="todo-list__title">
+        Sensação de dever cumprido. Que tal um café agora?
+      </div>
+      <task
+        placeholder="Pera, tem mais uma coisa"
+        :model="true"
+        @editTask="handleAddTask"
+      ></task>
+      <div>
+        <div class="todo-list__label--done">Feito ({{ doneTasks.length }})</div>
+        <task
+          v-for="item in doneTasks"
+          :key="item.id"
+          :title="item.text"
+          :editable="false"
+          :actions="false"
+          state="done"
+          :transition="item.transition"
+          @handleCheckbox="handleCheckTask(...arguments, item)"
         ></task>
       </div>
     </section>
@@ -82,24 +121,41 @@ export default {
     },
     pendingTasksCount() {
       return this.pendingTasks.length > 0 ? `(${this.pendingTasks.length})` : ''
+    },
+    hasOnlyDoneTask() {
+      return this.doneTasks.length > 0 && this.pendingTasks.length === 0
     }
   },
   methods: {
     ...mapActions({
       addTask: 'tasks/addTask',
       editTask: 'tasks/editTask',
+      checkTask: 'tasks/checkTask',
+      unCheckTask: 'tasks/unCheckTask',
       setConfirmModal: 'tasks/setConfirmModal',
       setSelectedTask: 'tasks/setSelectedTask'
     }),
     handleAddTask(text) {
       const task = {
         id: new Date().getTime(),
-        text
+        text,
+        transition: false
       }
       this.addTask(task)
     },
     handleEditTask(text, index) {
       this.editTask({ text, index })
+    },
+    handleCheckTask(check, item) {
+      if (check) {
+        setTimeout(() => {
+          this.checkTask(item)
+        }, 1000)
+      } else {
+        setTimeout(() => {
+          this.unCheckTask(item)
+        }, 1000)
+      }
     },
     confirmDelete(task) {
       this.setSelectedTask(task)
@@ -148,18 +204,28 @@ export default {
       height: auto;
     }
   }
-  .todo-first-task {
-    .todo-list__title {
-      padding: 40px 24px 12px 24px;
-      font-size: 16px;
-      color: $primary;
-    }
+
+  .todo-list__label--pending {
+    font-size: 16px;
+    color: $primary;
+    padding: 31px 28px 12px;
   }
-  .todo-has-task {
-    .todo-list__title {
-      padding: 31px 28px 14px;
-      font-size: 16px;
-      color: $primary;
+
+  .todo-list__label--done {
+    font-size: 16px;
+    color: $primary;
+    padding: 24px 28px 12px;
+  }
+
+  .todo-list__title {
+    padding: 40px 24px 12px 24px;
+    font-size: 16px;
+    color: $primary;
+  }
+
+  .todo-has-only-done-task {
+    .title {
+      padding: 32px 50px 28px;
     }
   }
 }

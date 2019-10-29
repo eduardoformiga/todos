@@ -1,6 +1,6 @@
 <template>
   <div class="task">
-    <checkbox></checkbox>
+    <checkbox :checked="isDone" @change="handleCheckbox"></checkbox>
     <div class="task-details">
       <input-tag
         v-if="editMode"
@@ -14,6 +14,8 @@
         v-else
         :text="text"
         :actions="actions"
+        :state="state"
+        :transition="transition"
         @editItem="editTask"
         @deleteItem="deleteTask"
       ></item>
@@ -54,6 +56,14 @@ export default {
     actions: {
       type: Boolean,
       default: true
+    },
+    state: {
+      type: String,
+      default: 'pending'
+    },
+    transition: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -65,7 +75,10 @@ export default {
   computed: {
     ...mapGetters({
       globalEditMode: 'tasks/globalEditMode'
-    })
+    }),
+    isDone() {
+      return this.state === 'done'
+    }
   },
   methods: {
     ...mapActions({
@@ -114,6 +127,9 @@ export default {
     },
     deleteTask() {
       this.$emit('deleteTask')
+    },
+    handleCheckbox(check) {
+      this.$emit('handleCheckbox', check)
     }
   }
 }

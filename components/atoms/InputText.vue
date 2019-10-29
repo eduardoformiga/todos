@@ -5,6 +5,8 @@
     type="text"
     :placeholder="placeholder"
     class="input-text"
+    @focus="handleFocus"
+    @blur="handleBlur"
     @keypress.enter="handleKeyEnter"
     @keyup.esc="handleKeyEsc"
   />
@@ -39,6 +41,12 @@ export default {
         this.$emit('esc', this.text)
       }
     },
+    handleFocus() {
+      this.$emit('focus')
+    },
+    handleBlur() {
+      this.$emit('blur')
+    },
     // used by parent component
     focus() {
       this.$refs.input.focus()
@@ -56,6 +64,7 @@ export default {
   margin: 0;
   border: 0;
   padding: 3.5px 50px 3.5px 0;
+  width: 100%;
   flex-grow: 1;
   vertical-align: middle;
   white-space: normal;

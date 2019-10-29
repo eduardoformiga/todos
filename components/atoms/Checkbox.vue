@@ -1,13 +1,29 @@
 <template>
   <label class="checkbox">
-    <input type="checkbox" hidden />
+    <input v-model="isChecked" type="checkbox" hidden @change="handleChange" />
     <span class="checkmark"></span>
   </label>
 </template>
 
 <script>
 export default {
-  name: 'Checkbox'
+  name: 'Checkbox',
+  props: {
+    checked: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      isChecked: this.checked
+    }
+  },
+  methods: {
+    handleChange() {
+      this.$emit('change', this.isChecked)
+    }
+  }
 }
 </script>
 
