@@ -4,10 +4,10 @@
       v-model="isChecked"
       type="checkbox"
       hidden
-      :disabled="model"
+      :disabled="disabled"
       @change="handleChange"
     />
-    <span class="checkmark"></span>
+    <span class="checkmark" :class="styleClass"></span>
   </label>
 </template>
 
@@ -19,14 +19,23 @@ export default {
       type: Boolean,
       default: false
     },
-    model: {
+    disabled: {
       type: Boolean,
       default: false
+    },
+    state: {
+      type: String,
+      default: 'pending'
     }
   },
   data() {
     return {
       isChecked: this.checked
+    }
+  },
+  computed: {
+    styleClass() {
+      return this.state === 'done' ? 'checkmark--done' : ''
     }
   },
   methods: {
@@ -58,6 +67,16 @@ export default {
       background-color: $active;
       border: 1px solid $white;
 
+      &.checkmark--done {
+        background-color: $white;
+        border: 1px solid $active;
+
+        &:after {
+          border-left: 1px solid $active;
+          border-bottom: 1px solid $active;
+        }
+      }
+
       &:after {
         display: block;
       }
@@ -80,8 +99,8 @@ export default {
       left: 8px;
       height: 4px;
       width: 10px;
-      border-left: 1px solid white;
-      border-bottom: 1px solid white;
+      border-left: 1px solid $white;
+      border-bottom: 1px solid $white;
       transform: rotate(-47deg);
     }
   }

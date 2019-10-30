@@ -2,7 +2,8 @@
   <div class="task">
     <checkbox
       :checked="isDone"
-      :model="model"
+      :disabled="model"
+      :state="state"
       @change="handleCheckbox"
     ></checkbox>
     <div class="task-details">
