@@ -99,7 +99,6 @@ import { mapActions, mapGetters } from 'vuex'
 import Task from '../components/organisms/Task'
 
 export default {
-  middleware: 'getTasks',
   components: { Task },
   data() {
     return {
