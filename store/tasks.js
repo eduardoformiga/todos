@@ -1,19 +1,15 @@
 import { getTasks } from '../services/task.service'
 
 const state = () => ({
-  pending: [],
-  done: [],
+  todoList: [],
   globalEditMode: false,
   selectedTask: {},
   confirmModal: false
 })
 
 const getters = {
-  pending(state) {
-    return state.pending
-  },
-  done(state) {
-    return state.done
+  todoList(state) {
+    return state.todoList
   },
   globalEditMode(state) {
     return state.globalEditMode
@@ -28,28 +24,30 @@ const getters = {
 
 const mutations = {
   addTask(state, payload) {
-    state.pending.push(payload)
+    state.todoList.push(payload)
   },
   editTask(state, { text, index }) {
-    const task = state.pending[index]
+    const task = state.todoList[index]
     task.text = text
-    state.pending.splice(index, 1, task)
+    state.todoList.splice(index, 1, task)
   },
   checkTask(state, item) {
-    const index = state.pending.findIndex((task) => task.id === item.id)
-    state.pending.splice(index, 1)
-    state.done.unshift(item)
+    const index = state.todoList.findIndex((task) => task.id === item.id)
+    item.done = true
+    state.todoList.splice(index, 1)
+    state.todoList.unshift(item)
   },
   unCheckTask(state, item) {
-    const index = state.done.findIndex((task) => task.id === item.id)
-    state.done.splice(index, 1)
-    state.pending.push(item)
+    const index = state.todoList.findIndex((task) => task.id === item.id)
+    item.done = false
+    state.todoList.splice(index, 1)
+    state.todoList.push(item)
   },
   toggleGlobalEditMode(state) {
     state.globalEditMode = !state.globalEditMode
   },
   deleteTask(state, payload) {
-    state.pending.splice(state.pending.indexOf(payload), 1)
+    state.todoList.splice(state.todoList.indexOf(payload), 1)
   },
   setSelectedTask(state, payload) {
     state.selectedTask = payload
@@ -58,8 +56,7 @@ const mutations = {
     state.confirmModal = confirm
   },
   setTasks(state, payload) {
-    state.pending = payload.pending
-    state.done = payload.done
+    state.todoList = payload
   }
 }
 

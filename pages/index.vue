@@ -108,20 +108,28 @@ export default {
   },
   computed: {
     ...mapGetters({
-      pendingTasks: 'tasks/pending',
-      doneTasks: 'tasks/done'
+      todoList: 'tasks/todoList'
     }),
     hasTask() {
-      return this.doneTasks.length > 0 || this.pendingTasks.length > 0
+      return this.todoList.length > 0
     },
     hasDoneTask() {
-      return this.doneTasks.length > 0
+      return !!this.todoList.filter((task) => task.done).length
+    },
+    doneTasks() {
+      return this.todoList.filter((task) => task.done)
+    },
+    pendingTasks() {
+      return this.todoList.filter((task) => !task.done)
     },
     pendingTasksCount() {
-      return this.pendingTasks.length > 0 ? `(${this.pendingTasks.length})` : ''
+      const pendingTasks = this.todoList.filter((task) => !task.done).length
+      return pendingTasks > 0 ? `(${pendingTasks})` : ''
     },
     hasOnlyDoneTask() {
-      return this.doneTasks.length > 0 && this.pendingTasks.length === 0
+      return this.todoList.length > 0
+        ? this.todoList.every((task) => task.done)
+        : false
     }
   },
   methods: {
@@ -136,7 +144,8 @@ export default {
     handleAddTask(text) {
       const task = {
         id: new Date().getTime(),
-        text
+        text,
+        done: false
       }
       this.addTask(task)
     },
