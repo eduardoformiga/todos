@@ -1,6 +1,10 @@
 <template>
   <div class="task">
-    <checkbox :checked="isDone" @change="handleCheckbox"></checkbox>
+    <checkbox
+      :checked="isDone"
+      :model="model"
+      @change="handleCheckbox"
+    ></checkbox>
     <div class="task-details">
       <input-tag
         v-if="editMode"

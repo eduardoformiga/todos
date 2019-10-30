@@ -1,6 +1,12 @@
 <template>
   <label class="checkbox">
-    <input v-model="isChecked" type="checkbox" hidden @change="handleChange" />
+    <input
+      v-model="isChecked"
+      type="checkbox"
+      hidden
+      :disabled="model"
+      @change="handleChange"
+    />
     <span class="checkmark"></span>
   </label>
 </template>
@@ -10,6 +16,10 @@ export default {
   name: 'Checkbox',
   props: {
     checked: {
+      type: Boolean,
+      default: false
+    },
+    model: {
       type: Boolean,
       default: false
     }
