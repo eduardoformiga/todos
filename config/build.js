@@ -13,5 +13,9 @@ export default {
   /*
    ** You can extend webpack config here
    */
-  extend(config, ctx) {}
+  extend(config, { isDev, isClient }) {
+    config.node = {
+      fs: 'empty'
+    }
+  }
 }

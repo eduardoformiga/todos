@@ -1,4 +1,9 @@
-import { getTasks } from '../services/task.service'
+import {
+  getTasks,
+  saveTask,
+  removeTask,
+  updateTask
+} from '../services/task.service'
 
 const state = () => ({
   todoList: [],
@@ -26,20 +31,17 @@ const mutations = {
   addTask(state, payload) {
     state.todoList.push(payload)
   },
-  editTask(state, { text, index }) {
+  editTask(state, index) {
     const task = state.todoList[index]
-    task.text = text
     state.todoList.splice(index, 1, task)
   },
   checkTask(state, item) {
     const index = state.todoList.findIndex((task) => task.id === item.id)
-    item.done = true
     state.todoList.splice(index, 1)
     state.todoList.unshift(item)
   },
   unCheckTask(state, item) {
     const index = state.todoList.findIndex((task) => task.id === item.id)
-    item.done = false
     state.todoList.splice(index, 1)
     state.todoList.push(item)
   },
@@ -61,7 +63,8 @@ const mutations = {
 }
 
 const actions = {
-  addTask({ commit }, item) {
+  async addTask({ commit }, item) {
+    await saveTask(item)
     commit('addTask', item)
   },
   setSelectedTask({ commit }, task) {
@@ -70,29 +73,38 @@ const actions = {
   setConfirmModal({ commit }, confirm) {
     commit('setConfirmModal', confirm)
   },
-  editTask({ commit }, payload) {
-    commit('editTask', payload)
+  async editTask({ commit }, { text, item, index }) {
+    const itemRef = { ...item }
+    itemRef.text = text
+    await updateTask(itemRef)
+    commit('editTask', index)
   },
-  checkTask({ commit }, payload) {
-    commit('checkTask', payload)
+  async checkTask({ commit }, item) {
+    const itemRef = { ...item }
+    itemRef.done = true
+    await updateTask(itemRef)
+    commit('checkTask', itemRef)
   },
-  unCheckTask({ commit }, payload) {
-    commit('unCheckTask', payload)
+  async unCheckTask({ commit }, item) {
+    const itemRef = { ...item }
+    itemRef.done = false
+    await updateTask(itemRef)
+    commit('unCheckTask', itemRef)
   },
   toggleGlobalEditMode({ commit }) {
     commit('toggleGlobalEditMode')
   },
-  deleteTask({ commit }, item) {
+  async deleteTask({ commit }, item) {
+    await removeTask(item)
     commit('deleteTask', item)
   },
   async searchTasks({ commit }) {
-    const result = await getTasks()
-    commit('setTasks', result.data)
+    const tasks = await getTasks()
+    commit('setTasks', tasks)
   }
 }
 
 export default {
-  namespaced: true,
   state,
   getters,
   mutations,

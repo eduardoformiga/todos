@@ -9,7 +9,7 @@
     <div class="task-details">
       <input-tag
         v-if="editMode"
-        ref="taskInput"
+        ref="inputTag"
         :text="text"
         :placeholder="placeholder"
         @enter="handleTask"
@@ -93,6 +93,7 @@ export default {
         this.editMode = true
         this.title = ''
         this.resetInput()
+        this.focusInput()
       } else {
         // edit task
         this.editMode = false
@@ -110,7 +111,6 @@ export default {
       if (this.globalEditMode) return
 
       this.editMode = true
-      // TODO set editMode global to true
       await this.$nextTick()
       this.focusInput()
       this.toggleGlobalEditMode()
@@ -120,10 +120,10 @@ export default {
       this.toggleGlobalEditMode()
     },
     focusInput() {
-      this.$refs.taskInput.focus()
+      this.$refs.inputTag.focus()
     },
     resetInput() {
-      this.$refs.taskInput.reset()
+      this.$refs.inputTag.reset()
     },
     deleteTask() {
       this.$emit('deleteTask')

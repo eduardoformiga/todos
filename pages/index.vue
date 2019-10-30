@@ -32,7 +32,7 @@
         :title="item.text"
         :editable="false"
         @handleCheckbox="handleCheckTask(...arguments, item)"
-        @editTask="handleEditTask(...arguments, index)"
+        @editTask="handleEditTask(...arguments, item, index)"
         @deleteTask="confirmDelete(item)"
       ></task>
       <task
@@ -99,6 +99,7 @@ import { mapActions, mapGetters } from 'vuex'
 import Task from '../components/organisms/Task'
 
 export default {
+  middleware: 'getTasks',
   components: { Task },
   data() {
     return {
@@ -132,6 +133,9 @@ export default {
         : false
     }
   },
+  mounted() {
+    this.searchTasks()
+  },
   methods: {
     ...mapActions({
       addTask: 'tasks/addTask',
@@ -139,6 +143,7 @@ export default {
       checkTask: 'tasks/checkTask',
       unCheckTask: 'tasks/unCheckTask',
       setConfirmModal: 'tasks/setConfirmModal',
+      searchTasks: 'tasks/searchTasks',
       setSelectedTask: 'tasks/setSelectedTask'
     }),
     handleAddTask(text) {
@@ -149,8 +154,8 @@ export default {
       }
       this.addTask(task)
     },
-    handleEditTask(text, index) {
-      this.editTask({ text, index })
+    handleEditTask(text, item, index) {
+      this.editTask({ text, item, index })
     },
     handleCheckTask(check, item) {
       if (check) {
@@ -230,6 +235,7 @@ export default {
   }
 
   .todo-has-only-done-task {
+    padding-bottom: 40px;
     .title {
       padding: 32px 50px 28px;
     }
