@@ -40,5 +40,11 @@ export default {
    * Nobody likes extra @import statements!
    * https://github.com/nuxt-community/style-resources-module/
    */
-  styleResources: config.styleResources
+  styleResources: config.styleResources,
+  /*
+   ** host configs to external host
+   */
+  server: {
+    host: '0.0.0.0' // default: localhost
+  }
 }
