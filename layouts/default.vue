@@ -2,7 +2,11 @@
   <div>
     <header>
       <div class="logo">
-        <img src="../assets/images/icon-checked.svg" class="icon-checked" />
+        <img
+          src="../assets/images/icon-checked.svg"
+          class="icon-checked"
+          alt="todo icon check logo"
+        />
         <div class="title">to-do</div>
       </div>
     </header>
