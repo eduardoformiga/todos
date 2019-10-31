@@ -1,5 +1,9 @@
 <template>
-  <div class="image-button" v-on="$listeners">
+  <div
+    class="image-button"
+    :aria-label="`image button ${imgName}`"
+    v-on="$listeners"
+  >
     <img :src="require('@/assets/images/' + imgName)" :alt="alt" />
   </div>
 </template>

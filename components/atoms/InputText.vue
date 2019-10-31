@@ -5,6 +5,7 @@
     type="text"
     :placeholder="placeholder"
     class="input-text"
+    aria-label="input text"
     @focus="handleFocus"
     @blur="handleBlur"
     @keypress.enter="handleKeyEnter"

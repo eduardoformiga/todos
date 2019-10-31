@@ -5,6 +5,7 @@
       type="checkbox"
       hidden
       :disabled="disabled"
+      :aria-label="`checkbox ${state} item`"
       @change="handleChange"
     />
     <span class="checkmark" :class="styleClass"></span>

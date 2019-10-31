@@ -100,7 +100,6 @@ import Task from '../components/organisms/Task'
 
 export default {
   components: { Task },
-  middleware: 'getTasks',
   data() {
     return {
       confirmModal: false,
@@ -133,6 +132,9 @@ export default {
         : false
     }
   },
+  mounted() {
+    this.searchTasks()
+  },
   methods: {
     ...mapActions({
       addTask: 'tasks/addTask',
@@ -140,6 +142,7 @@ export default {
       checkTask: 'tasks/checkTask',
       unCheckTask: 'tasks/unCheckTask',
       setConfirmModal: 'tasks/setConfirmModal',
+      searchTasks: 'tasks/searchTasks',
       setSelectedTask: 'tasks/setSelectedTask'
     }),
     handleAddTask(text) {
