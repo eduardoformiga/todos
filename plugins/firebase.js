@@ -4,13 +4,13 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 
 if (!firebase.apps.length) {
   const config = {
-    apiKey: String(process.env.API_KEY),
-    authDomain: String(process.env.AUTH_DOMAIN),
-    databaseURL: String(process.env.DATABASE_URL),
-    projectId: String(process.env.PROJECT_ID),
-    storageBucket: String(process.env.STORAGE_BUCKET),
-    messagingSenderId: String(process.env.MESSAGING_SENDER_ID),
-    appId: String(process.env.APP_ID)
+    apiKey: 'AIzaSyAy65k7aLfiicp3HJPE3GrrasYb0liQzd0',
+    authDomain: 'todoguava.firebaseapp.com',
+    databaseURL: 'https://todoguava.firebaseio.com',
+    projectId: 'todoguava',
+    storageBucket: 'todoguava.appspot.com',
+    messagingSenderId: '365143761302',
+    appId: '1:365143761302:web:2fe13f44c66f9e6e163db7'
   }
   firebase.initializeApp(config)
   // firebase.firestore().settings({ timestampsInSnapshots: true })
