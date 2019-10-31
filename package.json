@@ -1,7 +1,7 @@
 {
   "name": "todos",
   "version": "1.0.0",
-  "description": "My scrumtrulescent Nuxt.js project",
+  "description": "Todo Project",
   "author": "eduardo.formiga",
   "private": true,
   "scripts": {
