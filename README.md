@@ -6,6 +6,7 @@ Link: https://todo-guava.herokuapp.com/
 
 ## Nuxt - Server Side Render (SSR)
 A aplicação foi desenvolvida utilizando Vue.js, mais precisamente utilizando o Nuxt em modo universal para obter os benefícios do Server Side Render (SSR). O Nuxt é um framework open source que traz simplicidade e poderes ao desenvolvimento web em Vue.js.
+
 Alguns Benefícios: 
 - Arquitetura modular: com mais de 50 modulos que facilitam o desenvolvimento.
 - Otimizações em performance: utilizando as melhores práticas e mantendo um bundle final comprimido, removendo partes desnecessárias do pacote.
@@ -15,24 +16,31 @@ Alguns Benefícios:
   - Code splitting automático para carregamento de páginas mais rapidamente.
   - Configurações customizáveis de Babel e Webpack com suporte a HMR (Hot Module Replacement).
 
-Mais detalhes do nuxt: https://nuxtjs.org/
+Mais detalhes: https://nuxtjs.org/
 
 ## CSS e Atomic Design
-No CSS foi utilizado o SASS como pré processador, e ainda o postcss autoprefixer, para adicionar os vendors dos browsers.
+- SASS como pré processador de CSS, o que dá mais poderes ao CSS e possibilita uma melhor experiência de desenvolvimento.
+- PostCSS autoprefixer, para adicionar os vendors dos browsers automaticamente.
+- Atomic Design como metodologia de desenho da interface, onde Átomos e Moléculas foram pensados como componentes stateless, enquanto Organismos, Templates e Pages como componentes statefull.
+- Layout responsivo utilizando Grid, Flexbox, Media Queries (auxílio do módulo nuxt-mq) e da tag Picture com media queries para auxiliar no carregamento de imagens menores no mobile (visando performance).
 
-Atomos, Moleculas, Organismos, Templates e Pages. Sendo Atomos e moleculas componentes stateless e os demais statefull 
+Mais detalhes:
 
-Layout responsivo
+SASS - https://sass-lang.com/
 
-Mobile - Picture com media, performance etc
+PostCSS - https://postcss.org/
+
+Atomic Design - https://bradfrost.com/blog/post/atomic-web-design/
+
+Picture tag - https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/picture
 
 ## Backend Firebase
 Aplicação utiliza o FireStore ...
 Aplicação funciona offline, através de Service Workers. Neste caso a sincronização com o firebase fica comprometida.
 
 ## Features adicionais
-- Modal de confirmação de exclusão customizado;
-- Estado de carregamento e transições adicionados
+- Modal de confirmação de exclusão customizado.
+- Estado de carregamento e transições adicionados.
 
 ## Audit - LightHouse 
 ### Performance
@@ -59,5 +67,3 @@ $ npm run dev
 $ npm run build
 $ npm run start
 ```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
