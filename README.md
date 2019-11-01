@@ -5,7 +5,13 @@
 Link: https://todo-guava.herokuapp.com/
 
 ## Nuxt - Server Side Render (SSR)
-A aplicação foi desenvolvida utilizando Vue.js, mais precisamente com o Nuxt em modo universal para obter os benefícios do Server Side Render (SSR), como:
+A aplicação foi desenvolvida utilizando Vue.js, mais precisamente utilizando o Nuxt em modo universal para obter os benefícios do Server Side Render (SSR). O Nuxt é um framework open source que traz simplicidade e poderes ao desenvolvimento web em Vue.js.
+Alguns Benefícios: 
+- Arquitetura modular: com mais de 50 modulos que facilitam o desenvolvimento.
+- Otimizações em performance: utilizando as melhores práticas e mantendo um bundle final comprimido, removendo partes desnecessárias do pacote.
+- Server Side Render:
+  - Primeira renderização mais rápida entregando o html baseado nos componentes Vue ao browser, ao invés de javascript puro.
+  - Ganhos com melhorias de SEO, UX e outras oportunidades (em comparação com um Vue SPA tradicional).
 
 ## CSS e Atomic Design
 No CSS foi utilizado o SASS como pré processador, e ainda o postcss autoprefixer, para adicionar os vendors dos browsers.
