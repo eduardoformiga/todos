@@ -12,6 +12,10 @@ Alguns Benefícios:
 - Server Side Render:
   - Primeira renderização mais rápida entregando o html baseado nos componentes Vue ao browser, ao invés de javascript puro.
   - Ganhos com melhorias de SEO, UX e outras oportunidades (em comparação com um Vue SPA tradicional).
+  - Code splitting automático para carregamento de páginas mais rapidamente.
+  - Configurações customizavéis de Babel e Webpack com suporte a HMR (Hot Module Replacement).
+
+Mais detalhes do nuxt: https://nuxtjs.org/
 
 ## CSS e Atomic Design
 No CSS foi utilizado o SASS como pré processador, e ainda o postcss autoprefixer, para adicionar os vendors dos browsers.
