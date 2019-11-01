@@ -54,9 +54,11 @@ export default {
       deleteTask: 'tasks/deleteTask',
       setConfirmModal: 'tasks/setConfirmModal'
     }),
-    handleDeleteTask() {
+    async handleDeleteTask() {
+      this.$nuxt.$loading.start()
       this.setConfirmModal(false)
-      this.deleteTask(this.selectedTask)
+      await this.deleteTask(this.selectedTask)
+      this.$nuxt.$loading.finish()
     },
     cancelDelete() {
       this.setConfirmModal(false)

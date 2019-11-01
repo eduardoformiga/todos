@@ -132,8 +132,8 @@ export default {
         : false
     }
   },
-  mounted() {
-    this.searchTasks()
+  async fetch({ store, params, app }) {
+    await store.dispatch('tasks/searchTasks')
   },
   methods: {
     ...mapActions({
@@ -145,25 +145,32 @@ export default {
       searchTasks: 'tasks/searchTasks',
       setSelectedTask: 'tasks/setSelectedTask'
     }),
-    handleAddTask(text) {
+    async handleAddTask(text) {
       const task = {
         id: new Date().getTime(),
         text,
         done: false
       }
-      this.addTask(task)
+      this.$nuxt.$loading.start()
+      await this.addTask(task)
+      this.$nuxt.$loading.finish()
     },
-    handleEditTask(text, item, index) {
-      this.editTask({ text, item, index })
+    async handleEditTask(text, item, index) {
+      this.$nuxt.$loading.start()
+      await this.editTask({ text, item, index })
+      this.$nuxt.$loading.finish()
     },
     handleCheckTask(check, item) {
+      this.$nuxt.$loading.start()
       if (check) {
-        setTimeout(() => {
-          this.checkTask(item)
+        setTimeout(async () => {
+          await this.checkTask(item)
+          this.$nuxt.$loading.finish()
         }, 1000)
       } else {
-        setTimeout(() => {
-          this.unCheckTask(item)
+        setTimeout(async () => {
+          await this.unCheckTask(item)
+          this.$nuxt.$loading.finish()
         }, 1000)
       }
     },
