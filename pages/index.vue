@@ -6,85 +6,103 @@
       src="../assets/images/background-illustration.svg"
       alt="background-ilustration"
     />
-    <section v-if="!hasTask" class="todo-first-task">
-      <div class="title">Nenhuma tarefa criada ainda.</div>
-      <div class="state-image">
-        <picture>
-          <source
-            srcset="../assets/images/meditating-sm.svg"
-            media="(max-width: 450px)"
-          />
-          <img src="../assets/images/meditating.svg" alt="meditating" />
-        </picture>
-      </div>
-      <div class="todo-list__title">
-        Que tal organizar as ideias criando uma lista agora?
-      </div>
-      <task :model="true" @editTask="handleAddTask"></task>
-    </section>
-    <section v-if="hasTask && !hasOnlyDoneTask" class="todo-has-task">
-      <div class="todo-list__label--pending">
-        Pendente {{ pendingTasksCount }}
-      </div>
-      <task
-        v-for="(item, index) in pendingTasks"
-        :key="item.id"
-        :title="item.text"
-        :editable="false"
-        @handleCheckbox="handleCheckTask(...arguments, item)"
-        @editTask="handleEditTask(...arguments, item, index)"
-        @deleteTask="confirmDelete(item)"
-      ></task>
-      <task
-        placeholder="Cuidado com o Burnout, viu?"
-        :model="true"
-        @editTask="handleAddTask"
-      ></task>
-      <div v-if="hasDoneTask">
-        <div class="todo-list__label--done">Feito ({{ doneTasks.length }})</div>
+    <transition name="fade">
+      <section
+        v-if="!hasTask"
+        class="todo-first-task"
+      >
+        <div class="title">Nenhuma tarefa criada ainda.</div>
+        <div class="state-image">
+          <picture>
+            <source
+              srcset="../assets/images/meditating-sm.svg"
+              media="(max-width: 450px)"
+            />
+            <img
+              src="../assets/images/meditating.svg"
+              alt="meditating"
+            />
+          </picture>
+        </div>
+        <div class="todo-list__title">Que tal organizar as ideias criando uma lista agora?</div>
         <task
-          v-for="item in doneTasks"
+          :model="true"
+          @editTask="handleAddTask"
+        ></task>
+      </section>
+    </transition>
+    <transition name="fade">
+      <section
+        v-if="hasTask && !hasOnlyDoneTask"
+        class="todo-has-task"
+      >
+        <div class="todo-list__label--pending">Pendente {{ pendingTasksCount }}</div>
+        <task
+          v-for="(item, index) in pendingTasks"
           :key="item.id"
           :title="item.text"
           :editable="false"
-          :actions="false"
-          state="done"
           @handleCheckbox="handleCheckTask(...arguments, item)"
+          @editTask="handleEditTask(...arguments, item, index)"
+          @deleteTask="confirmDelete(item)"
         ></task>
-      </div>
-    </section>
-    <section v-if="hasOnlyDoneTask" class="todo-has-only-done-task">
-      <div class="title">Tudo pronto!</div>
-      <div class="state-image">
-        <picture>
-          <source
-            srcset="../assets/images/coffee-sm.svg"
-            media="(max-width: 450px)"
-          />
-          <img src="../assets/images/coffee.svg" alt="coffee" />
-        </picture>
-      </div>
-      <div class="todo-list__title">
-        Sensação de dever cumprido. Que tal um café agora?
-      </div>
-      <task
-        placeholder="Pera, tem mais uma coisa"
-        :model="true"
-        @editTask="handleAddTask"
-      ></task>
-      <div>
-        <div class="todo-list__label--done">Feito ({{ doneTasks.length }})</div>
         <task
-          v-for="item in doneTasks"
-          :key="item.id"
-          :title="item.text"
-          :editable="false"
-          :actions="false"
-          state="done"
-          @handleCheckbox="handleCheckTask(...arguments, item)"
+          placeholder="Cuidado com o Burnout, viu?"
+          :model="true"
+          @editTask="handleAddTask"
         ></task>
-      </div>
-    </section>
+        <div v-if="hasDoneTask">
+          <div class="todo-list__label--done">Feito ({{ doneTasks.length }})</div>
+          <task
+            v-for="item in doneTasks"
+            :key="item.id"
+            :title="item.text"
+            :editable="false"
+            :actions="false"
+            state="done"
+            @handleCheckbox="handleCheckTask(...arguments, item)"
+          ></task>
+        </div>
+      </section>
+    </transition>
+    <transition name="fade">
+      <section
+        v-if="hasOnlyDoneTask"
+        class="todo-has-only-done-task"
+      >
+        <div class="title">Tudo pronto!</div>
+        <div class="state-image">
+          <picture>
+            <source
+              srcset="../assets/images/coffee-sm.svg"
+              media="(max-width: 450px)"
+            />
+            <img
+              src="../assets/images/coffee.svg"
+              alt="coffee"
+            />
+          </picture>
+        </div>
+        <div class="todo-list__title">Sensação de dever cumprido. Que tal um café agora?</div>
+        <task
+          placeholder="Pera, tem mais uma coisa"
+          :model="true"
+          @editTask="handleAddTask"
+        ></task>
+        <div>
+          <div class="todo-list__label--done">Feito ({{ doneTasks.length }})</div>
+          <task
+            v-for="item in doneTasks"
+            :key="item.id"
+            :title="item.text"
+            :editable="false"
+            :actions="false"
+            state="done"
+            @handleCheckbox="handleCheckTask(...arguments, item)"
+          ></task>
+        </div>
+      </section>
+    </transition>
     <img
       v-if="$mq == 'lg'"
       class="bg-illustration-right"
@@ -246,6 +264,16 @@ export default {
       padding: 32px 50px 28px;
     }
   }
+}
+
+.fade-enter-active {
+  transition: opacity 1.5s;
+}
+.fade-leave-active {
+  transition: opacity 0s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active em versões anteriores a 2.1.8 */ {
+  opacity: 0;
 }
 
 @media screen and (max-width: 855px) {
