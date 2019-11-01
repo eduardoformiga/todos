@@ -13,7 +13,7 @@ Alguns Benefícios:
   - Primeira renderização mais rápida entregando o html baseado nos componentes Vue ao browser, ao invés de javascript puro.
   - Ganhos com melhorias de SEO, UX e outras oportunidades (em comparação com um Vue SPA tradicional).
   - Code splitting automático para carregamento de páginas mais rapidamente.
-  - Configurações customizavéis de Babel e Webpack com suporte a HMR (Hot Module Replacement).
+  - Configurações customizáveis de Babel e Webpack com suporte a HMR (Hot Module Replacement).
 
 Mais detalhes do nuxt: https://nuxtjs.org/
 
