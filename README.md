@@ -33,13 +33,34 @@ Obs: a aplicação funciona offline através de Service Workers. Neste caso, a s
 - Modal de confirmação de exclusão customizado.
 - Estado de carregamento e transições adicionados.
 
-## Audit - LightHouse 
-### Performance
-### Acessibilidade
-### Melhores práticas
-### SEO
-### PWAs
+## Auditoria - LightHouse 
+Durante o desenvolvimento, o LightHouse foi utilizado para realizar auditorias com a finalidade de identificar problemas que afetam performance, acessibilidade e experiência do usuário, servindo como guia para realizar os ajustes necessários.
 
+Os seguintes critérios foram levados em consideração, utilizando uma rede simulada lenta 4G:
+
+- Performance
+- Acessibilidade
+- Melhores práticas
+- SEO
+- PWAs
+
+Resultados:
+
+<b>Web</b> - Relatório detalhado em: https://lighthousetodo.netlify.com/
+![LightHouse Web](https://lighthousetodo.netlify.com/img/web.png)
+
+<b>Mobile</b> - Relatório detalhado em: https://lighthousetodo.netlify.com/mobile
+![LightHouse Mobile](https://lighthousetodo.netlify.com/img/mobile.png)
+
+
+<b>PWA</b> - Adicionando o app com a opção "Adicionar à Tela de Início"
+
+<p align="left">
+  <img src="https://lighthousetodo.netlify.com/img/pwa1.png" alt="PWA option 1" width="200" height="350">
+  <img src="https://lighthousetodo.netlify.com/img/pwa2.png" alt="PWA option 2" width="200" height="350">
+</p>
+
+Obs: o LightHouse pode ser acessado via a aba Audits do DevTools no Google Chrome.
 
 ## Build e Deploy 
 A fim de obter os benefícios de SSR com o Nuxt.js necessitamos do Node.js. Desta forma, escolhemos o [Heroku](https://www.heroku.com/), como Plataforma como Serviço (Platform as a Service, ou PaaS). 
