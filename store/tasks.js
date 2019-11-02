@@ -31,9 +31,8 @@ const mutations = {
   addTask(state, payload) {
     state.todoList.push(payload)
   },
-  editTask(state, index) {
-    const task = state.todoList[index]
-    state.todoList.splice(index, 1, task)
+  editTask(state, { index, item }) {
+    state.todoList.splice(index, 1, item)
   },
   checkTask(state, item) {
     const index = state.todoList.findIndex((task) => task.id === item.id)
@@ -77,7 +76,7 @@ const actions = {
     const itemRef = { ...item }
     itemRef.text = text
     await updateTask(itemRef)
-    commit('editTask', index)
+    commit('editTask', { index, item: itemRef })
   },
   async checkTask({ commit }, item) {
     const itemRef = { ...item }
