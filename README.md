@@ -1,8 +1,15 @@
 # TODOs
 
-> Aplicação de TODOs.
-
 Link: https://todo-guava.herokuapp.com/
+
+Principais Features:
+- Acessar lista de TODOs
+- Adicionar novo TODO
+- Editar TODO
+- Remover TODO
+- Completar TODO
+- Desmarcar TODO
+- Mostrar contagem de TODOs
 
 ## Nuxt - Server Side Render (SSR)
 A aplicação foi desenvolvida utilizando Vue.js, mais precisamente utilizando o [Nuxt](https://nuxtjs.org/) em modo universal para obter os benefícios do Server Side Render (SSR). O Nuxt é um framework open source que traz simplicidade e poderes ao desenvolvimento web em Vue.js.
@@ -44,16 +51,18 @@ Os seguintes critérios foram levados em consideração, utilizando uma rede sim
 - SEO
 - PWAs
 
-Resultados:
+<b>Resultados:</b>
 
 <b>Web</b> - Relatório detalhado em: https://lighthousetodo.netlify.com/
+
 ![LightHouse Web](https://lighthousetodo.netlify.com/img/web.png)
 
 <b>Mobile</b> - Relatório detalhado em: https://lighthousetodo.netlify.com/mobile
+
 ![LightHouse Mobile](https://lighthousetodo.netlify.com/img/mobile.png)
 
 
-<b>PWA</b> - Adicionando o app com a opção "Adicionar à Tela de Início"
+<b>PWA</b> - Adicionando o app com a opção "Adicionar à Tela de Início":
 
 <p align="left">
   <img src="https://lighthousetodo.netlify.com/img/pwa1.png" alt="PWA option 1" width="200" height="350">
