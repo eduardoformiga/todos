@@ -61,6 +61,7 @@ Os seguintes critérios foram levados em consideração, utilizando uma rede sim
 
 ![LightHouse Mobile](https://lighthousetodo.netlify.com/img/mobile.png)
 
+Obs: o LightHouse pode ser acessado via a aba Audits do DevTools no Google Chrome.
 
 <b>PWA</b> - Adicionando o app com a opção "Adicionar à Tela de Início":
 
@@ -68,8 +69,6 @@ Os seguintes critérios foram levados em consideração, utilizando uma rede sim
   <img src="https://lighthousetodo.netlify.com/img/pwa1.png" alt="PWA option 1" width="200" height="350">
   <img src="https://lighthousetodo.netlify.com/img/pwa2.png" alt="PWA option 2" width="200" height="350">
 </p>
-
-Obs: o LightHouse pode ser acessado via a aba Audits do DevTools no Google Chrome.
 
 ## Build e Deploy 
 A fim de obter os benefícios de SSR com o Nuxt.js necessitamos do Node.js. Desta forma, escolhemos o [Heroku](https://www.heroku.com/), como Plataforma como Serviço (Platform as a Service, ou PaaS). 
